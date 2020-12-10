@@ -16,5 +16,9 @@ class Day01Test < Minitest::Test
     it "searches for two entries" do
       _(ReportRepair.new(2020, 2).search(EXAMPLE)).must_equal 514579
     end
+
+    it "searches for three entries" do
+      _(ReportRepair.new(2020, 3).search(EXAMPLE)).must_equal 241861950
+    end
   end
 end
