@@ -1,0 +1,8 @@
+source "https://rubygems.org"
+
+ruby '2.7.1'
+
+gem 'minitest-spec'
+gem 'pry-byebug'
+gem 'guard'
+gem 'guard-minitest'
