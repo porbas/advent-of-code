@@ -16,4 +16,5 @@ end
 if (input_file = ARGV[0]) =~ /txt$/
   entries = File.readlines(input_file).map {|line| line.to_i}
   puts ReportRepair.new(2020, 2).search(entries)
+  puts ReportRepair.new(2020, 3).search(entries)
 end
