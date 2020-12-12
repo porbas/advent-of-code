@@ -123,7 +123,6 @@ class SeatingSystem
 end
 
 if (input_file = ARGV[0]) =~ /txt$/
-  entries = File.readlines(input_file).map {|line| line.to_i}
-  puts ReportRepair2.new(2020).search(entries)
-  puts ReportRepair3.new(2020).search(entries)
+  layout = File.read(input_file)
+  puts SeatingSystem.new(layout).run.occupied_seats_count
 end
