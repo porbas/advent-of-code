@@ -10,6 +10,8 @@ class SeatingSystem
       if dump(@matrix) == dump(m)
         break
       else
+        # puts dump m
+        # puts "-"*15
         @matrix = m
       end
     end
@@ -25,19 +27,15 @@ class SeatingSystem
   end
 
   def dump(m=@matrix)
-    m[1..-2].map do |row|
-      row[1..-2].map {|place| place.dump}.join ''
+    m.map do |row|
+      row.map {|place| place.dump}.join ''
     end.join "\n"
   end
 
   private
 
   def parse(layout)
-    lines = layout.split("\n").map {|line| '.' + line + '.'}
-    special_line = lines.first.gsub(/./, '.')
-    lines.unshift special_line
-    lines.push special_line
-    @matrix = lines.map {|line| parse_line line}
+    @matrix = layout.split("\n").map {|line| parse_line line}
   end
 
   def parse_line(line)
@@ -57,10 +55,46 @@ class SeatingSystem
 
   def adjacent_for(x, y)
     [
-      m[y-1][x-1..x+1],
-      m[y][x-1], m[y][x+1],
-      m[y+1]&.[](x-1..x+1)
-    ].flatten
+      adjacent_top(x,y),
+      adjacent_top_right(x,y),
+      adjacent_right(x,y),
+      adjacent_bottom_right(x,y),
+      adjacent_bottom(x,y),
+      adjacent_bottom_left(x,y),
+      adjacent_left(x,y),
+      adjacent_top_left(x,y),
+    ].compact
+  end
+
+  def adjacent_top(x,y)
+    return nil if y == 0
+    m[y-1]&.[](x)
+  end
+  def adjacent_top_right(x,y)
+    return nil if y == 0
+    m[y-1]&.[](x+1)
+  end
+  def adjacent_right(x,y)
+    m[y][x+1]
+  end
+  def adjacent_bottom_right(x,y)
+    m[y+1]&.[](x+1)
+  end
+  def adjacent_bottom(x,y)
+    m[y+1]&.[](x)
+  end
+  def adjacent_bottom_left(x,y)
+    return nil if x == 0
+    m[y+1]&.[](x-1)
+  end
+  def adjacent_left(x,y)
+    return nil if x == 0
+    m[y][x-1]
+  end
+  def adjacent_top_left(x,y)
+    return nil if y == 0
+    return nil if x == 0
+    m[y-1]&.[](x-1)
   end
 
   def next_state
