@@ -26,6 +26,11 @@ class Day11Test < Minitest::Test
       _(system.occupied_seats_count).must_equal 37
     end
 
+    it "works slightly other way in part2" do
+      system = SeatingSystemPart2.new(example).run
+      _(system.occupied_seats_count).must_equal 26
+    end
+
   end
 end
 
