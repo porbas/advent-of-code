@@ -68,33 +68,33 @@ class SeatingSystem
 
   def adjacent_top(x,y)
     return nil if y == 0
-    m[y-1]&.[](x)
+    m.dig(y-1, x)
   end
   def adjacent_top_right(x,y)
     return nil if y == 0
-    m[y-1]&.[](x+1)
+    m.dig(y-1, x+1)
   end
   def adjacent_right(x,y)
-    m[y][x+1]
+    m.dig(y, x+1)
   end
   def adjacent_bottom_right(x,y)
-    m[y+1]&.[](x+1)
+    m.dig(y+1, x+1)
   end
   def adjacent_bottom(x,y)
-    m[y+1]&.[](x)
+    m.dig(y+1, x)
   end
   def adjacent_bottom_left(x,y)
     return nil if x == 0
-    m[y+1]&.[](x-1)
+    m.dig(y+1, x-1)
   end
   def adjacent_left(x,y)
     return nil if x == 0
-    m[y][x-1]
+    m.dig(y, x-1)
   end
   def adjacent_top_left(x,y)
     return nil if y == 0
     return nil if x == 0
-    m[y-1]&.[](x-1)
+    m.dig(y-1, x-1)
   end
 
   def next_state
@@ -158,5 +158,5 @@ end
 
 if (input_file = ARGV[0]) =~ /txt$/
   layout = File.read(input_file)
-  puts SeatingSystem.new(layout).run.occupied_seats_count
+  puts SeatingSystem.new(layout).run_part_one.occupied_seats_count
 end
