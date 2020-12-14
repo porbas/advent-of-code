@@ -38,6 +38,19 @@ class Policy
     @min, @max = limits.split("-").map(&:to_i)
   end
 end
+
+class Policy2 < Policy
+  def validate(pass)
+    (pass[pos1] == @char) ^ (pass[pos2] == @char)
+  end
+
+  private
+
+  attr_reader :min, :max
+  alias pos1 min
+  alias pos2 max
+end
+
 class Password
   def initialize(value, policy)
     @value = value
@@ -51,5 +64,6 @@ end
 
 if (input_file = ARGV[0]) =~ /txt$/
   passwords = File.read(input_file)
-  puts PasswordPhilosophy.new(passwords).phase1
+  puts PasswordPhilosophy.new(Policy).call(passwords)
+  puts PasswordPhilosophy.new(Policy2).call(passwords)
 end

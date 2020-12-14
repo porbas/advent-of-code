@@ -14,6 +14,7 @@ class Day02Test < Minitest::Test
 
     it "gives count of valid passwords" do
       _(PasswordPhilosophy.new(Policy).call(example)).must_equal 2
+      _(PasswordPhilosophy.new(Policy2).call(example)).must_equal 1
     end
 
   end
