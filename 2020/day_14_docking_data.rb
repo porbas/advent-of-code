@@ -15,11 +15,19 @@ class DockingData
     lines.each do |line|
       case line
       when /^mask = (.*)$/
-        mask = Bitmask.new $1
+        process_mask $1
       when /^mem\[(.*)\] = (.*)$/
-        @mem[$1.to_i] = mask.apply($2.to_i)
+        process_command $1.to_i, $2.to_i
       end
     end
+  end
+
+  def process_mask(str)
+    @mask = Bitmask.new str
+  end
+
+  def process_command(address, value)
+    @mem[address] = @mask.apply(value)
   end
 end
 
@@ -31,6 +39,19 @@ class Bitmask
 
   def apply(val)
     (val & @mask0) | @mask1
+  end
+end
+
+class DockingData2 < DockingData
+
+  private
+
+  def process_mask(str)
+
+  end
+
+  def process_command(address, value)
+
   end
 end
 
