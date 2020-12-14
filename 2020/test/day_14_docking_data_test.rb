@@ -27,6 +27,7 @@ class Day11Test < Minitest::Test
     end
 
     it "properly processes input" do
+      $pry = true
       _(DockingData2.new.call(example2)).must_equal 208
     end
 
