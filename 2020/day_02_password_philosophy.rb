@@ -1,10 +1,10 @@
 class PasswordPhilosophy
-  def initialize(lines)
-    @passwords = parse lines
+  def initialize(policy_class)
+    @policy_class = policy_class
   end
 
-  def call
-    @passwords.map(&:valid?).count(true)
+  def call(lines)
+    parse(lines).map(&:valid?).count(true)
   end
   private
 
@@ -14,7 +14,7 @@ class PasswordPhilosophy
 
   def parse_password(line)
     tokens = line.split ':'
-    policy = Policy.new tokens.first
+    policy = @policy_class.new tokens.first
     Password.new tokens.last, policy
   end
 end
@@ -47,4 +47,9 @@ class Password
   def valid?
     @policy.validate @value
   end
+end
+
+if (input_file = ARGV[0]) =~ /txt$/
+  passwords = File.read(input_file)
+  puts PasswordPhilosophy.new(passwords).phase1
 end

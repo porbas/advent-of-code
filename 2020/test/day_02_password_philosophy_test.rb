@@ -13,7 +13,7 @@ class Day02Test < Minitest::Test
     end
 
     it "gives count of valid passwords" do
-      _(PasswordPhilosophy.new(example).call).must_equal 2
+      _(PasswordPhilosophy.new(Policy).call(example)).must_equal 2
     end
 
   end
