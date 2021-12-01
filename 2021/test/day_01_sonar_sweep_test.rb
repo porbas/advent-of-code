@@ -21,5 +21,11 @@ class Day01Test < Minitest::Test
       _(SonarSweep.new.call(EXAMPLE)).must_equal 7
     end
   end
+
+  describe SlidingSonarSweep do
+    it "returns count of increases" do
+      _(SlidingSonarSweep.new.call(EXAMPLE)).must_equal 5
+    end
+  end
 end
 
