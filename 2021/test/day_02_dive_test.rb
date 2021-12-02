@@ -18,5 +18,10 @@ class Day02Test < Minitest::Test
     end
   end
 
+  describe PositionCalculator2 do
+    it "returns final position" do
+      _(PositionCalculator2.new.call(EXAMPLE)).must_equal(Position.new(15, 60))
+    end
+  end
 end
 

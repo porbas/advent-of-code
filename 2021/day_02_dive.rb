@@ -32,8 +32,35 @@ class PositionCalculator
   end
 end
 
+
+class PositionCalculator2 < PositionCalculator
+  def initialize
+    super
+    @aim = 0
+  end
+
+  private
+  attr_reader :aim
+
+  def forward(v)
+    h = position.h + v
+    d = position.d + aim * v
+    @position = Position.new(h, d)
+  end
+
+  def down(v)
+    @aim += v
+  end
+
+  def up(v)
+    @aim -= v
+  end
+end
+
 if (input_file = ARGV[0]) =~ /txt$/
   lines = File.readlines(input_file)
   position = PositionCalculator.new.call(lines)
+  puts position.h * position.d
+  position = PositionCalculator2.new.call(lines)
   puts position.h * position.d
 end
