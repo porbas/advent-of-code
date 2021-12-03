@@ -2,7 +2,7 @@ require 'test_helper'
 
 require 'day_03_binary_diagnostic'
 
-class Day02Test < Minitest::Test
+class Day03Test < Minitest::Test
   EXAMPLE = <<~END.split("\n")
     00100
     11110
@@ -24,5 +24,10 @@ class Day02Test < Minitest::Test
     end
   end
 
+  describe LifeSupportRatingCalculator do
+    it "returns life support rate" do
+      _(LifeSupportRatingCalculator.new.call(EXAMPLE)).must_equal(230)
+    end
+  end
 end
 
