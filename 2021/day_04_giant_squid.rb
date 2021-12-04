@@ -1,5 +1,3 @@
-
-
 class Bingo
   def call(lines)
     prepare_game(lines)
@@ -36,6 +34,26 @@ class Bingo
     end
 
     play(step+1)
+  end
+end
+
+class LastBingo < Bingo
+  def play(round=0, winning_score=0)
+    last_winning_score = winning_score
+    @boards.each {|b| b.mark!(@numbers[round])}
+    winning = @boards.select {|b| b.wins?}
+    if winning.size > 1
+      winning.each {|b| @boards.delete(b)}
+    elsif winning.size == 1
+      last_winning_score = winning.first.score * @numbers[round]
+      @boards.delete winning.first
+    end
+
+    if round < @numbers.size - 1
+      play(round+1, last_winning_score)
+    else
+      last_winning_score
+    end
   end
 end
 
@@ -112,4 +130,5 @@ end
 if (input_file = ARGV[0]) =~ /txt$/
   lines = File.readlines(input_file).map(&:strip)
   puts Bingo.new.call(lines)
+  puts LastBingo.new.call(lines)
 end

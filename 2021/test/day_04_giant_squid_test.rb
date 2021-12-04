@@ -26,8 +26,14 @@ class Day04Test < Minitest::Test
 END
 
   describe Bingo do
-    it "returns score for wining board" do
+    it "returns score for first wining board" do
       _(Bingo.new.call(EXAMPLE)).must_equal(4512)
+    end
+  end
+
+  describe LastBingo do
+    it "returns score for last wining board" do
+      _(LastBingo.new.call(EXAMPLE)).must_equal(1924)
     end
   end
 end
