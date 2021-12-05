@@ -1,3 +1,12 @@
+class DangerCalculator2
+  def call(input_lines)
+    @matrix = Matrix.new(
+      input_lines.map {|l| Line.new(l)}
+    )
+    @matrix.score(2)
+  end
+end
+
 class DangerCalculator
   def call(input_lines)
     @matrix = Matrix.new(
@@ -25,7 +34,7 @@ class Matrix
   def score(treshold)
     counter = 0
     @matrix.each do |row|
-      row.map do |cell|
+      Array(row).map do |cell|
         counter +=1 if cell && cell >= treshold
       end
     end
@@ -63,7 +72,11 @@ class Line
     elsif horizontal?
       (@p1.x..@p2.x).map {|x| Point.new(x, @p1.y) }
     else
-      []
+      a = []
+      x_iterator.each_with_index do |x,idx|
+        a << Point.new(x, y_iterator[idx..idx].first)
+      end
+      a
     end
   end
 
@@ -72,6 +85,22 @@ class Line
   def normalize
     if @p1.x >= @p2.x && @p1.y >= @p2.y
       @p1, @p2 = @p2, @p1
+    end
+  end
+
+  def x_iterator
+    if @p1.x > @p2.x
+      @p1.x.downto(@p2.x)
+    else
+      @p1.x.upto(@p2.x)
+    end
+  end
+
+  def y_iterator
+    if @p1.y > @p2.y
+      @p1.y.downto(@p2.y).to_a
+    else
+      @p1.y.upto(@p2.y).to_a
     end
   end
 end
@@ -83,4 +112,5 @@ end
 if (input_file = ARGV[0]) =~ /txt$/
   lines = File.readlines(input_file).map(&:strip)
   puts DangerCalculator.new.call(lines)
+  puts DangerCalculator2.new.call(lines)
 end

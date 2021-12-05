@@ -22,5 +22,11 @@ END
     end
   end
 
+  describe DangerCalculator2 do
+    it "returns number of danger areas" do
+      _(DangerCalculator2.new.call(EXAMPLE)).must_equal(12)
+    end
+  end
+
 end
 
