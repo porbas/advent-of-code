@@ -24,6 +24,7 @@ class LanternfishSchool
   def call(days)
     (1..days).to_a.each do |d|
       day
+      puts "#{d}: #{@meters.count}"
     end
     fish_count
   end
@@ -32,10 +33,20 @@ class LanternfishSchool
     @meters.each {|m| m.day}
     @meters <<  @new_meter if @new_meter
     @new_meter = nil
+    optimize_meters
   end
 
   def fish_count
     @meters.sum {|m| m.count}
+  end
+
+  def optimize_meters
+    @by_timer = {}
+    @meters.each do |m|
+      @by_timer[m.timer] ||= Meter.new(Lanternfish.new(m.timer, self))
+      @by_timer[m.timer].add(m.count)
+    end
+    @meters = @by_timer.values
   end
 end
 
@@ -47,8 +58,8 @@ class Meter
     @count = 0
   end
 
-  def add
-    @count +=1
+  def add(c=1)
+    @count += c
   end
 
   def timer
@@ -81,4 +92,5 @@ end
 if (input_file = ARGV[0]) =~ /txt$/
   lines = File.readlines(input_file).map(&:strip)
   puts LanternfishSchool.new(lines.first).call(80)
+  puts LanternfishSchool.new(lines.first).call(256)
 end
