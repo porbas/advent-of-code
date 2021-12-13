@@ -18,13 +18,12 @@ class LanternfishSchool
 
   def new_fish(timer, count)
     @new_meter ||= Meter.new(Lanternfish.new(timer, self))
-    count.times { @new_meter.add }
+    @new_meter.add(count)
   end
 
   def call(days)
     (1..days).to_a.each do |d|
       day
-      puts "#{d}: #{@meters.count}"
     end
     fish_count
   end
